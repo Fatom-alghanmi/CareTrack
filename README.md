@@ -1,7 +1,7 @@
 # ShifaTrack
 
 ## Introduction
-ShifaTrack is a medication reminder and health management web app built using PHP and MySQL. It helps users track medication intake, monitor missed doses, schedule doctor follow-ups, and receive timely reminders.
+CareTrack is a medication reminder and health management web app built using PHP and MySQL. It helps users track medication intake, monitor missed doses, schedule doctor follow-ups, and receive timely reminders.
 
 ## Features
 - Add/edit daily medication schedules
