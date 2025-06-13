@@ -4,9 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Add Medication</title>
-  <link rel="stylesheet" href="css/style.css"> <!-- Optional CSS -->
+  <link rel="stylesheet" href="css/main.css"> <!-- Optional CSS -->
 </head>
 <body>
+<div class="layout">
+    <nav class="sidebar">
+      <h2>CareTrack</h2>
+      <a href="index.php">🏠 Home</a>
+      <a href="add_medication.php">➕ Add Medication</a>
+      <a href="view_medications.php">📋 View Medications</a>
+      <a href="add_appointment.php" class="active">📅 Add Appointment</a>
+      <a href="view_appointments.php">📖 View Appointments</a>
+    </nav>
+
+    <main class="content">
   <h2>Add Medication</h2>
 
   <form action="save_medication.php" method="POST">

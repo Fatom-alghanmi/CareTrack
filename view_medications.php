@@ -12,20 +12,28 @@ $result = $conn->query($sql);
 <head>
   <meta charset="UTF-8" />
   <title>View Medications - CareTrack</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 
-<div class="layout">
-  <nav class="sidebar">
-    <h2>CareTrack</h2>
-    <a href="index.php">🏠 Home</a>
-    <a href="add_medication.php">➕ Add Medication</a>
-    <a href="view_medications.php" class="active">📋 View Medications</a>
-    <a href="appointments.php">📅 Appointments</a>
-  </nav>
+<nav class="sidebar">
+  <h2>CareTrack</h2>
+  <a href="index.php">🏠 Home</a>
+  <a href="add_medication.php">➕ Add Medication</a>
+  <a href="view_medications.php" class="active">📋 View Medications</a>
+  <a href="add_appointment.php">📅 Add Appointment</a>
+  <a href="view_appointments.php">📖 View Appointments</a>
+</nav>
 
   <main class="content">
+    
+  <?php 
+  if (isset($_SESSION['success_message'])) {
+    echo '<div class="success-message">' . htmlspecialchars($_SESSION['success_message']) . '</div>';
+    unset($_SESSION['success_message']);}if (isset($_SESSION['error_message'])) {
+    echo '<div class="error-message">' . htmlspecialchars($_SESSION['error_message']) . '</div>';
+    unset($_SESSION['error_message']);}?>
+
     <h1>All Medications</h1>
 
     <?php if ($result->num_rows > 0): ?>

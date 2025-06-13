@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require_once 'database.php';
 
 // Check if ID is provided via GET or POST
@@ -89,7 +89,7 @@ $conn->close();
 <head>
   <meta charset="UTF-8" />
   <title>Update Medication - CareTrack</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 

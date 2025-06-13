@@ -6,7 +6,7 @@ session_start();
 <head>
   <meta charset="UTF-8">
   <title>CareTrack | Home</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
@@ -16,7 +16,8 @@ session_start();
       <a href="index.php">🏠 Home</a>
       <a href="add_medication.php">➕ Add Medication</a>
       <a href="view_medications.php">📋 View Medications</a>
-      <a href="appointments.php">📅 Appointments</a>
+      <a href="add_appointment.php">📅 Add Appointment</a>
+      <a href="view_appointments.php" class="active">📖 View Appointments</a>
     </nav>
 
     <main class="content">

@@ -1,37 +1,34 @@
 <?php
-// save_medication.php
 
-// Include database connection
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+session_start();
 require_once 'database.php';
 
-// Get form data
-$name = $_POST['name'] ?? '';
-$dosage = $_POST['dosage'] ?? '';
-$frequency = $_POST['frequency'] ?? '';
-$start_date = $_POST['start_date'] ?? '';
-$end_date = $_POST['end_date'] ?? null; // Optional
-$notes = $_POST['notes'] ?? '';
 
-// Validate required fields
-if ($name && $dosage && $frequency && $start_date) {
-    // Prepare and execute SQL insert
-    $sql = "INSERT INTO medications (name, dosage, frequency, start_date, end_date, notes)
-            VALUES (?, ?, ?, ?, ?, ?)";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssss", $name, $dosage, $frequency, $start_date, $end_date, $notes);
+require_once 'database.php';
 
-    if ($stmt->execute()) {
-        header("Location: confirm_add.php");
-        exit;
-    } else {
-        echo "Error: " . $stmt->error;
-    }
+// Assume you have input validation here...
 
-    $stmt->close();
+$name = $_POST['name'];
+$dosage = $_POST['dosage'];
+$frequency = $_POST['frequency'];
+$start_date = $_POST['start_date'];
+$end_date = !empty($_POST['end_date']) ? $_POST['end_date'] : null;
+$notes = !empty($_POST['notes']) ? $_POST['notes'] : null;
+
+$sql = "INSERT INTO medications (name, dosage, frequency, start_date, end_date, notes) VALUES (?, ?, ?, ?, ?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ssssss", $name, $dosage, $frequency, $start_date, $end_date, $notes);
+
+if ($stmt->execute()) {
+    $_SESSION['success_message'] = "Medication added successfully!";
+    header("Location: view_medications.php");
+    exit;
 } else {
-    echo "Please fill in all required fields.";
+    $_SESSION['error_message'] = "Error adding medication: " . $conn->error;
+    header("Location: add_medication.php");
+    exit;
 }
-
-$conn->close();
 ?>
