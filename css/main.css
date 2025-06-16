@@ -31,7 +31,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 220px;
+    width: 250px;
     height: 100vh;
     background: #22384d;
     color: #ecf0f1;
@@ -68,19 +68,37 @@
   
   /* Main content */
   .content {
-    margin-left: 220px; /* space for the fixed sidebar */
-    flex-grow: 1;
-    padding: 60px 80px;
-    background-color: #fff;
+    margin-left: 250px; /* Same width as sidebar */
+    padding: 20px 40px; /* Add some padding */
+    min-height: 100vh;  /* So footer will be pushed down */
+    background-color: rgba(255, 255, 255, 0.9); /* Optional for better readability */
+    box-sizing: border-box;
   }
   
-  /* Headings */
-  h1, p {
+  
+  h1 {
     text-align: center;
     margin-bottom: 25px;
     font-weight: 700;
-    font-size: 2rem;
-    color: #2c3e50;
+    font-size: 3em;
+    color: #000000;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-size: 1.3em;
+    color: #4482d8;
+  }
+  /* Headings */
+   p {
+    margin-top: 100px;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-size: 1.5em;
+    color: #000101;
   }
   
   /* Success and Error Messages */
@@ -181,5 +199,14 @@
   .actions a:hover {
     text-decoration: underline;
   }
+ 
+  
+  footer {
+    text-align: center;
+    margin-top: 2rem;
+    clear: both;
+    font-size: 14px;
+    color: #000;
+}
   
   

@@ -16,8 +16,11 @@ $result = $conn->query($sql);
 </head>
 <body>
 
+<?php include 'header.php'; ?>
+
+<div class="layout">
 <nav class="sidebar">
-  <h2>CareTrack</h2>
+  <h2>Dashboard Menu</h2>
   <a href="index.php">🏠 Home</a>
   <a href="add_medication.php">➕ Add Medication</a>
   <a href="view_medications.php" class="active">📋 View Medications</a>
@@ -34,7 +37,7 @@ $result = $conn->query($sql);
     echo '<div class="error-message">' . htmlspecialchars($_SESSION['error_message']) . '</div>';
     unset($_SESSION['error_message']);}?>
 
-    <h1>All Medications</h1>
+    <h2>All Medications</h2>
 
     <?php if ($result->num_rows > 0): ?>
       <table class="medications-table">
@@ -58,6 +61,7 @@ $result = $conn->query($sql);
               <td><?= htmlspecialchars($row['start_date']) ?></td>
               <td><?= htmlspecialchars($row['end_date'] ?: '-') ?></td>
               <td><?= htmlspecialchars($row['notes'] ?: '-') ?></td>
+
               <td class="actions">
                 <a href="update_medication.php?id=<?= $row['id'] ?>">Edit</a>
                 <a href="delete_medication.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete this medication?');">Delete</a>
@@ -72,10 +76,12 @@ $result = $conn->query($sql);
 
   </main>
 </div>
-
+<div class="layout">
+<?php include 'footer.php'; ?>
 </body>
 </html>
 
 <?php
 $conn->close();
 ?>
+

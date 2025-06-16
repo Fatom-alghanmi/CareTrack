@@ -7,9 +7,11 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+<?php include 'header.php'; ?>
+
   <div class="layout">
     <nav class="sidebar">
-      <h2>CareTrack</h2>
+      <h2>Dashboard Menu</h2>
       <a href="index.php">🏠 Home</a>
       <a href="add_medication.php">➕ Add Medication</a>
       <a href="view_medications.php">📋 View Medications</a>
@@ -18,7 +20,7 @@
     </nav>
 
     <main class="content">
-      <h1>Add New Appointment</h1>
+      <h2>Add New Appointment</h2>
 
       <?php if (isset($_SESSION['error'])): ?>
         <div class="error-message"><?= htmlspecialchars($_SESSION['error']) ?></div>
@@ -45,5 +47,6 @@
       </form>
     </main>
   </div>
+<?php include 'footer.php'; ?>
 </body>
 </html>

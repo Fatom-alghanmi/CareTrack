@@ -14,9 +14,10 @@ $result = $conn->query($sql);
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+<?php include 'header.php'; ?>
   <div class="layout">
     <nav class="sidebar">
-      <h2>CareTrack</h2>
+      <h2>Dashboard Menu</h2>
       <a href="index.php">🏠 Home</a>
       <a href="add_medication.php">➕ Add Medication</a>
       <a href="view_medications.php">📋 View Medications</a>
@@ -25,16 +26,11 @@ $result = $conn->query($sql);
     </nav>
 
     <main class="content">
-      <h1>All Appointments</h1>
+      <h2>All Appointments</h2>
 
       <?php if (isset($_SESSION['success_message'])): ?>
         <div class="success-message"><?= htmlspecialchars($_SESSION['success_message']) ?></div>
         <?php unset($_SESSION['success_message']); ?>
-      <?php endif; ?>
-
-      <?php if (isset($_SESSION['error_message'])): ?>
-        <div class="error-message"><?= htmlspecialchars($_SESSION['error_message']) ?></div>
-        <?php unset($_SESSION['error_message']); ?>
       <?php endif; ?>
 
       <?php if ($result && $result->num_rows > 0): ?>
@@ -62,10 +58,10 @@ $result = $conn->query($sql);
                 <td><?= htmlspecialchars($row['location']) ?></td>
                 <td><?= nl2br(htmlspecialchars($row['notes'])) ?></td>
                 <td><?= htmlspecialchars($row['created_at']) ?></td>
-                <td>
-                  <a href="update_appointment.php?id=<?= $row['id'] ?>">✏️ Edit</a> |
-                  <a href="delete_appointment.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete this appointment?')">❌ Delete</a>
-                </td>
+                <td class="actions">
+                <a href="update_appointment.php?id=<?= $row['id'] ?>">Edit</a>
+                <a href="delete_appointment.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete this appointment?');">Delete</a>
+
               </tr>
               <?php endwhile; ?>
             </tbody>
@@ -76,5 +72,6 @@ $result = $conn->query($sql);
       <?php endif; ?>
     </main>
   </div>
+<?php include 'footer.php'; ?>
 </body>
 </html>

@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $start_date = trim($_POST['start_date']);
     $end_date = trim($_POST['end_date']);
     $notes = trim($_POST['notes']);
+    
 
     // Basic validation
     $errors = [];
@@ -92,10 +93,10 @@ $conn->close();
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-
+<?php include 'header.php'; ?>
 <div class="layout">
   <nav class="sidebar">
-    <h2>CareTrack</h2>
+    <h2>Dashboard Menu</h2>
     <a href="index.php">🏠 Home</a>
     <a href="add_medication.php">➕ Add Medication</a>
     <a href="view_medications.php">📋 View Medications</a>
@@ -135,6 +136,7 @@ $conn->close();
 
       <button type="submit">Update Medication</button>
     </form>
+    <?php include 'footer.php'; ?>
   </main>
 </div>
 

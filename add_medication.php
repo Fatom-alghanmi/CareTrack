@@ -7,17 +7,17 @@
   <link rel="stylesheet" href="css/main.css"> <!-- Optional CSS -->
 </head>
 <body>
+<?php include 'header.php'; ?>
 <div class="layout">
     <nav class="sidebar">
-      <h2>CareTrack</h2>
+      <h2>Dashboard Menu</h2>
       <a href="index.php">🏠 Home</a>
       <a href="add_medication.php">➕ Add Medication</a>
       <a href="view_medications.php">📋 View Medications</a>
       <a href="add_appointment.php" class="active">📅 Add Appointment</a>
       <a href="view_appointments.php">📖 View Appointments</a>
     </nav>
-
-    <main class="content">
+    <main class="content"> 
   <h2>Add Medication</h2>
 
   <form action="save_medication.php" method="POST">
@@ -36,11 +36,16 @@
     <label for="end_date">End Date (optional):</label><br>
     <input type="date" name="end_date" id="end_date"><br><br>
 
+    <label for="reminder_time">Reminder Time (optional):</label>
+  <input type="time" id="reminder_time" name="reminder_time">
+
     <label for="notes">Notes (optional):</label><br>
     <textarea name="notes" id="notes" rows="4" cols="40"></textarea><br><br>
 
     <button type="submit">Save Medication</button>
   </form>
-
+  <?php include 'footer.php'; ?>
+  </main>
 </body>
+
 </html>

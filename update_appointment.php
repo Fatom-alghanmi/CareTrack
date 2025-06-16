@@ -66,10 +66,11 @@ $conn->close();
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
+<?php include 'header.php'; ?>
 
 <div class="layout">
   <nav class="sidebar">
-    <h2>CareTrack</h2>
+    <h2>Dashboard Menu</h2>
     <a href="index.php">🏠 Home</a>
     <a href="add_medication.php">💊 Add Medication</a>
     <a href="view_medications.php">📋 View Medications</a>
@@ -77,6 +78,7 @@ $conn->close();
   </nav>
 
   <main class="content">
+  <?php include 'header.php'; ?>
     <h1>Update Appointment</h1>
 
     <?php if (isset($_SESSION['error'])): ?>
@@ -86,20 +88,24 @@ $conn->close();
     <form action="update_appointment.php" method="post" class="medication-form">
       <input type="hidden" name="id" value="<?= htmlspecialchars($appointment['id']) ?>" />
 
-      <label for="title">Title</label>
-      <input type="text" id="title" name="title" value="<?= htmlspecialchars($appointment['title']) ?>" required />
+      <label for="patient_name">Patient Name</label>
+      <input type="text" id="patient_name" name="patient_name" value="<?= htmlspecialchars($appointment['patient_name']) ?>" required />
 
-      <label for="date">Date</label>
-      <input type="date" id="date" name="date" value="<?= htmlspecialchars($appointment['date']) ?>" required />
+      <label for="doctor_name">Doctor Name</label>
+      <input type="text" id="doctor_name" name="doctor_name" value="<?= htmlspecialchars($appointment['doctor_name']) ?>" required />
 
-      <label for="time">Time</label>
-      <input type="time" id="time" name="time" value="<?= htmlspecialchars($appointment['time']) ?>" required />
+      <label for="appointment_date">Appointment Date</label>
+      <input type="date" id="appointment_date" name="appointment_date" value="<?= htmlspecialchars($appointment['appointment_date']) ?>" required />
+
+      <label for="location">Location</label>
+      <input type="text" id="location" name="location" value="<?= htmlspecialchars($appointment['location']) ?>" required />
 
       <label for="notes">Notes (optional)</label>
       <textarea id="notes" name="notes"><?= htmlspecialchars($appointment['notes']) ?></textarea>
 
       <button type="submit">Update Appointment</button>
     </form>
+    <?php include 'footer.php'; ?>
   </main>
 </div>
 
