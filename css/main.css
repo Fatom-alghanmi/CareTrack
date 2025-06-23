@@ -1,212 +1,330 @@
 /* General reset and base */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    scroll-behavior: smooth;
-  }
-  
-  body {
-    background: url(../images/medication.png) no-repeat center center fixed;
-    background-size: cover;
-    color: #333;
-    line-height: 1.6;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-  }
-  
-  main {
-    background: url(../images/medication.png) no-repeat center center fixed;
-    background-size: cover;
-  }
-  
-  /* Layout */
-  .layout {
-    display: flex;
-    min-height: 100vh;
-  }
-  
-  /* Sidebar Navigation */
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 100vh;
-    background: #22384d;
-    color: #ecf0f1;
-    padding: 20px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    z-index: 1000;
-  }
-  
-  .sidebar h2 {
-    margin-bottom: 30px;
-    font-size: 1.8rem;
-    text-align: center;
-  }
-  
-  .sidebar a {
-    color: #ecf0f1;
-    text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-    font-size: 1rem;
-    display: block;
-  }
-  
-  .sidebar a:hover,
-  .sidebar a:focus,
-  .sidebar a.active {
-    background: #3c5267;
-    outline: none;
-  }
-  
-  /* Main content */
-  .content {
-    margin-left: 250px; /* Same width as sidebar */
-    padding: 20px 40px; /* Add some padding */
-    min-height: 100vh;  /* So footer will be pushed down */
-    background-color: rgba(255, 255, 255, 0.9); /* Optional for better readability */
-    box-sizing: border-box;
-  }
-  
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 25px;
-    font-weight: 700;
-    font-size: 3em;
-    color: #000000;
-  }
-
-  h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    font-weight: 700;
-    font-size: 1.3em;
-    color: #4482d8;
-  }
-  /* Headings */
-   p {
-    margin-top: 100px;
-    text-align: center;
-    margin-bottom: 25px;
-    font-weight: 700;
-    font-size: 1.5em;
-    color: #000101;
-  }
-  
-  /* Success and Error Messages */
-  .success-message {
-    background-color: #d4edda;
-    border-left: 6px solid #28a745;
-    padding: 15px;
-    margin-bottom: 25px;
-    color: #155724;
-    border-radius: 3px;
-  }
-  
-  .error-message {
-    background-color: #ffdddd;
-    color: #d8000c;
-    padding: 15px;
-    margin-bottom: 25px;
-    border-left: 6px solid #d8000c;
-    border-radius: 3px;
-  }
-  
-  .medication-form {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 2rem;
-    margin: 2rem auto;
-    max-width: 600px;
-    border-radius: 12px;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .medication-form label {
-    display: block;
-    margin-top: 1rem;
-    margin-bottom: 0.3rem;
-    font-weight: bold;
-  }
-  
-  .medication-form input,
-  .medication-form textarea {
-    width: 100%;
-    padding: 0.7rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-  }
-  
-  .medication-form button {
-    padding: 0.7rem 1.5rem;
-    font-size: 1rem;
-    background-color: #0077cc;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .medication-form button:hover {
-    background-color: #005fa3;
-  }
-  
-  
-  /* Table Styles */
-  .medications-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-  }
-  
-  .medications-table th,
-  .medications-table td {
-    padding: 12px 15px;
-    border: 1px solid #ccc;
-    text-align: left;
-  }
-  
-  .medications-table th {
-    background-color: #2980b9;
-    color: white;
-  }
-  
-  .medications-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .medications-table tr:hover {
-    background-color: #ddd;
-  }
-  
-  .actions a {
-    margin-right: 10px;
-    color: #2980b9;
-    text-decoration: none;
-  }
-  
-  .actions a:hover {
-    text-decoration: underline;
-  }
- 
-  
-  footer {
-    text-align: center;
-    margin-top: 2rem;
-    clear: both;
-    font-size: 14px;
-    color: #000;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
 }
-  
-  
+
+body {
+  background: url(../images/medication.png) no-repeat center center fixed;
+  background-size: cover;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  padding-bottom: 60px; /* space for fixed footer */
+}
+
+main {
+  background: url(../images/medication.png) no-repeat center center fixed;
+  background-size: cover;
+}
+
+.button input {
+  float: left;
+  margin-bottom: 0.5em;
+}
+
+.button {
+  background-color: #1c55b1;
+  color: white;
+  border: 2px solid #154395;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  box-sizing: border-box;
+  min-width: 120px;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: #154395;
+  border-color: #0f2c6a;
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  /* No margin or padding here */
+}
+
+/* Sidebar Navigation */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background: #22384d;
+  color: #ecf0f1;
+  padding: 20px 15px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+  text-align: center;
+  user-select: none;
+}
+
+.sidebar a {
+  color: #ecf0f1;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  display: block;
+  user-select: none;
+}
+
+.sidebar a:hover,
+.sidebar a:focus,
+.sidebar a.active {
+  background: #3c5267;
+  outline: none;
+}
+
+/* Main content */
+.content {
+  flex-grow: 1;
+  margin-left: 250px; /* exactly same as sidebar width */
+  padding: 30px 40px 80px; /* bottom padding for footer space */
+  min-height: 100vh; /* pushes footer down */
+  background-color: rgba(255, 255, 255, 0.9);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Profile image in nav or header */
+.profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #2980b9;
+  user-select: none;
+}
+
+/* Headings */
+h1 {
+  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 3em;
+  color: #000;
+}
+
+h2 {
+  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 1.3em;
+  color: #4482d8;
+}
+
+p {
+  margin-top: 100px;
+  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 1.5em;
+  color: #000101;
+}
+
+/* Success and Error Messages */
+.success-message {
+  background-color: #d4edda;
+  border-left: 6px solid #28a745;
+  padding: 15px;
+  margin-bottom: 25px;
+  color: #155724;
+  border-radius: 3px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.error-message {
+  background-color: #ffdddd;
+  color: #d8000c;
+  padding: 15px;
+  margin-bottom: 25px;
+  border-left: 6px solid #d8000c;
+  border-radius: 3px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Forms */
+.medication-form {
+  background: rgba(255, 255, 255, 0.558);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 5px; /* smaller gap than 20px */
+  margin-top: 10px; /* less top margin */
+}
+
+.info-card {
+  background: #ebbebe76;
+  border-radius: 12px;
+  padding: 15px; /* smaller padding */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  transition: 0.3s ease;
+  line-height: .8;
+  margin-bottom: 10px; /* reduce bottom margin if any */
+}
+
+.info-card h3 {
+  margin-bottom: 4px; /* reduce space under heading */
+}
+
+.info-card p {
+  margin-bottom: 3px; /* tighten paragraphs */
+  font-size: 1em;
+}
+
+
+.medication-form label {
+  display: block;
+  margin-top: .5rem;
+  margin-bottom: 0.1rem;
+  font-weight: bold;
+}
+
+.medication-form input,
+.medication-form textarea {
+  width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+.medication-form button {
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.medication-form button:hover {
+  background-color: #005fa3;
+}
+
+/* Table Styles */
+.medications-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+}
+
+.medications-table th,
+.medications-table td {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.medications-table th {
+  background-color: #62aadb;
+  color: white;
+}
+
+.medications-table tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+.medications-table tr:hover {
+  background: #ddd;
+}
+
+.actions a {
+  margin-right: 10px;
+  color: #2980b9;
+  text-decoration: none;
+}
+
+.actions a:hover {
+  text-decoration: underline;
+}
+
+/* Fixed footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #000;
+  z-index: 1000;
+  user-select: none;
+}
+
+/* Responsive tweaks */
+@media (max-width: 700px) {
+  .sidebar {
+    width: 200px;
+  }
+  .content {
+    margin-left: 200px;
+    padding: 20px;
+  }
+  footer {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px;
+  }
+  .sidebar a {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+  .content {
+    margin-left: 0;
+    padding: 15px 10px 80px;
+  }
+  footer {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+  }
+}

@@ -1,3 +1,3 @@
 <footer>
-<p>&copy; <?= date('Y') ?> CareTrack. All rights reserved.</p>
+<p>&copy; <?= date('2025') ?> CareTrack. All rights reserved.</p>
 </footer>

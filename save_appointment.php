@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'database.php';
+require_once 'database.php';  // $db is PDO instance
 
 $patient_name = trim($_POST['patient_name']);
 $doctor_name = trim($_POST['doctor_name']);
@@ -15,16 +15,20 @@ if (!$patient_name || !$doctor_name || !$appointment_date) {
 }
 
 $sql = "INSERT INTO appointments (patient_name, doctor_name, appointment_date, location, notes)
-        VALUES (?, ?, ?, ?, ?)";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("sssss", $patient_name, $doctor_name, $appointment_date, $location, $notes);
+        VALUES (:patient_name, :doctor_name, :appointment_date, :location, :notes)";
+$stmt = $db->prepare($sql);
+
+$stmt->bindValue(':patient_name', $patient_name);
+$stmt->bindValue(':doctor_name', $doctor_name);
+$stmt->bindValue(':appointment_date', $appointment_date);
+$stmt->bindValue(':location', $location);
+$stmt->bindValue(':notes', $notes);
 
 if ($stmt->execute()) {
   $_SESSION['success_message'] = "Appointment added successfully.";
 } else {
   $_SESSION['error'] = "Error saving appointment.";
 }
-$stmt->close();
-$conn->close();
+
 header("Location: view_appointments.php");
 exit;

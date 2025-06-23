@@ -1,36 +1,34 @@
 <?php
+session_start();
+require_once 'database.php'; // provides $db as PDO
 
-require_once 'database.php';
+// Redirect if not logged in (optional but recommended)
+if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
+    header("Location: login_form.php");
+    exit;
+}
 
-// Check if ID is provided via GET or POST
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (!isset($_GET['id']) || empty($_GET['id'])) {
-        // No ID, redirect to view page
         header('Location: view_medications.php');
         exit;
     }
 
     $id = intval($_GET['id']);
 
-    // Fetch medication data
-    $stmt = $conn->prepare("SELECT * FROM medications WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Fetch medication data with PDO
+    $stmt = $db->prepare("SELECT * FROM medications WHERE id = ?");
+    $stmt->execute([$id]);
+    $med = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result->num_rows !== 1) {
-        // No medication found with this ID
+    if (!$med) {
         $_SESSION['error'] = "Medication not found.";
         header('Location: view_medications.php');
         exit;
     }
 
-    $med = $result->fetch_assoc();
-
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Process form submission
-
-    // Collect POST data and sanitize
     $id = intval($_POST['id']);
     $name = trim($_POST['name']);
     $dosage = trim($_POST['dosage']);
@@ -38,24 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $start_date = trim($_POST['start_date']);
     $end_date = trim($_POST['end_date']);
     $notes = trim($_POST['notes']);
-    
 
-    // Basic validation
+    // Validate inputs
     $errors = [];
-
-    if (empty($name)) {
-        $errors[] = "Name is required.";
-    }
-    if (empty($dosage)) {
-        $errors[] = "Dosage is required.";
-    }
-    if (empty($frequency)) {
-        $errors[] = "Frequency is required.";
-    }
-    if (empty($start_date)) {
-        $errors[] = "Start date is required.";
-    }
-    // You can add more validations as needed
+    if (empty($name)) $errors[] = "Name is required.";
+    if (empty($dosage)) $errors[] = "Dosage is required.";
+    if (empty($frequency)) $errors[] = "Frequency is required.";
+    if (empty($start_date)) $errors[] = "Start date is required.";
 
     if (!empty($errors)) {
         $_SESSION['error'] = implode('<br>', $errors);
@@ -63,26 +50,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 
-    // Update medication
-    $stmt = $conn->prepare("UPDATE medications SET name=?, dosage=?, frequency=?, start_date=?, end_date=?, notes=? WHERE id=?");
-    $stmt->bind_param("ssssssi", $name, $dosage, $frequency, $start_date, $end_date, $notes, $id);
+    // Update with PDO and named parameters
+    $sql = "UPDATE medications SET name = :name, dosage = :dosage, frequency = :frequency, 
+            start_date = :start_date, end_date = :end_date, notes = :notes WHERE id = :id";
 
-    if ($stmt->execute()) {
+    $stmt = $db->prepare($sql);
+    $params = [
+        ':name' => $name,
+        ':dosage' => $dosage,
+        ':frequency' => $frequency,
+        ':start_date' => $start_date,
+        ':end_date' => $end_date ?: null,
+        ':notes' => $notes ?: null,
+        ':id' => $id,
+    ];
+
+    if ($stmt->execute($params)) {
         $_SESSION['success'] = "Medication updated successfully.";
         header("Location: view_medications.php");
         exit;
     } else {
-        $_SESSION['error'] = "Error updating medication: " . $conn->error;
+        $_SESSION['error'] = "Error updating medication.";
         header("Location: update_medication.php?id=$id");
         exit;
     }
+
 } else {
     // Invalid request method
     header('Location: view_medications.php');
     exit;
 }
-
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -96,15 +93,17 @@ $conn->close();
 <?php include 'header.php'; ?>
 <div class="layout">
   <nav class="sidebar">
-    <h2>Dashboard Menu</h2>
+    <h2>CareTrack</h2>
     <a href="index.php">🏠 Home</a>
-    <a href="add_medication.php">➕ Add Medication</a>
+    <a href="add_medication.php">💊 Add Medication</a>
     <a href="view_medications.php">📋 View Medications</a>
-    <a href="appointments.php">📅 Appointments</a>
+    <a href="add_appointment.php">📅 Add Appointment</a>
+    <a href="view_appointments.php">📖 View Appointments</a>
+    <p><a href="logout.php" class="back-link">Logout</a></p>
   </nav>
 
   <main class="content">
-    <h1>Update Medication</h1>
+    <h2>Update Medication</h2>
 
     <?php
     if (isset($_SESSION['error'])) {
@@ -136,9 +135,8 @@ $conn->close();
 
       <button type="submit">Update Medication</button>
     </form>
-    <?php include 'footer.php'; ?>
   </main>
 </div>
-
+<?php include 'footer.php'; ?>
 </body>
 </html>

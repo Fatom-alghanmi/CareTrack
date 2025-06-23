@@ -1,10 +1,12 @@
 <?php
 session_start();
-require_once 'database.php';  // Your DB connection
+require_once 'database.php';  // Defines $db as PDO
 
 // Fetch all medications
 $sql = "SELECT * FROM medications ORDER BY created_at DESC";
-$result = $conn->query($sql);
+$stmt = $db->prepare($sql);
+$stmt->execute();
+$medications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -20,26 +22,30 @@ $result = $conn->query($sql);
 
 <div class="layout">
 <nav class="sidebar">
-  <h2>Dashboard Menu</h2>
+  <h2>CareTrack</h2>
   <a href="index.php">🏠 Home</a>
-  <a href="add_medication.php">➕ Add Medication</a>
+    <a href="add_medication.php">💊 Add Medication</a>
   <a href="view_medications.php" class="active">📋 View Medications</a>
   <a href="add_appointment.php">📅 Add Appointment</a>
   <a href="view_appointments.php">📖 View Appointments</a>
+  <p><a href="logout.php" class="back-link">Logout</a></p>
 </nav>
 
-  <main class="content">
-    
-  <?php 
-  if (isset($_SESSION['success_message'])) {
+<?php 
+if (!empty($_SESSION['success_message'])) {
     echo '<div class="success-message">' . htmlspecialchars($_SESSION['success_message']) . '</div>';
-    unset($_SESSION['success_message']);}if (isset($_SESSION['error_message'])) {
+    unset($_SESSION['success_message']);
+}
+if (!empty($_SESSION['error_message'])) {
     echo '<div class="error-message">' . htmlspecialchars($_SESSION['error_message']) . '</div>';
-    unset($_SESSION['error_message']);}?>
+    unset($_SESSION['error_message']);
+}
+?>
 
+<main class="content">
     <h2>All Medications</h2>
 
-    <?php if ($result->num_rows > 0): ?>
+    <?php if (!empty($medications)): ?>
       <table class="medications-table">
         <thead>
           <tr>
@@ -53,7 +59,7 @@ $result = $conn->query($sql);
           </tr>
         </thead>
         <tbody>
-          <?php while ($row = $result->fetch_assoc()): ?>
+          <?php foreach ($medications as $row): ?>
             <tr>
               <td><?= htmlspecialchars($row['name']) ?></td>
               <td><?= htmlspecialchars($row['dosage']) ?></td>
@@ -61,27 +67,21 @@ $result = $conn->query($sql);
               <td><?= htmlspecialchars($row['start_date']) ?></td>
               <td><?= htmlspecialchars($row['end_date'] ?: '-') ?></td>
               <td><?= htmlspecialchars($row['notes'] ?: '-') ?></td>
-
               <td class="actions">
-                <a href="update_medication.php?id=<?= $row['id'] ?>">Edit</a>
-                <a href="delete_medication.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete this medication?');">Delete</a>
+                <a href="update_medication.php?id=<?= urlencode($row['id']) ?>">Edit</a>
+                <a href="delete_medication.php?id=<?= urlencode($row['id']) ?>" onclick="return confirm('Are you sure you want to delete this medication?');">Delete</a>
               </td>
             </tr>
-          <?php endwhile; ?>
+          <?php endforeach; ?>
         </tbody>
       </table>
     <?php else: ?>
       <p>No medications found. <a href="add_medication.php">Add your first medication</a>.</p>
     <?php endif; ?>
-
-  </main>
+</main>
 </div>
-<div class="layout">
+
 <?php include 'footer.php'; ?>
+
 </body>
 </html>
-
-<?php
-$conn->close();
-?>
-

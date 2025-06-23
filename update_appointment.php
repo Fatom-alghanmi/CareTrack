@@ -1,6 +1,12 @@
 <?php
-require_once 'database.php';
 session_start();
+require_once 'database.php';  // provides $db as PDO
+
+// Redirect if not logged in (optional but recommended)
+if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
+    header("Location: login_form.php");
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (!isset($_GET['id']) || empty($_GET['id'])) {
@@ -9,29 +15,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
     $id = intval($_GET['id']);
-    $stmt = $conn->prepare("SELECT * FROM appointments WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
 
-    if ($result->num_rows !== 1) {
+    $stmt = $db->prepare("SELECT * FROM appointments WHERE id = ?");
+    $stmt->execute([$id]);
+    $appointment = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$appointment) {
         $_SESSION['error'] = "Appointment not found.";
         header('Location: view_appointments.php');
         exit;
     }
 
-    $appointment = $result->fetch_assoc();
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = intval($_POST['id']);
-    $title = trim($_POST['title']);
-    $date = trim($_POST['date']);
-    $time = trim($_POST['time']);
+    $patient_name = trim($_POST['patient_name']);
+    $doctor_name = trim($_POST['doctor_name']);
+    $appointment_date = trim($_POST['appointment_date']);
+    $location = trim($_POST['location']);
     $notes = trim($_POST['notes']);
 
     $errors = [];
-    if (empty($title)) $errors[] = "Title is required.";
-    if (empty($date)) $errors[] = "Date is required.";
-    if (empty($time)) $errors[] = "Time is required.";
+    if (empty($patient_name)) $errors[] = "Patient name is required.";
+    if (empty($doctor_name)) $errors[] = "Doctor name is required.";
+    if (empty($appointment_date)) $errors[] = "Appointment date is required.";
+    if (empty($location)) $errors[] = "Location is required.";
 
     if (!empty($errors)) {
         $_SESSION['error'] = implode('<br>', $errors);
@@ -39,15 +46,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 
-    $stmt = $conn->prepare("UPDATE appointments SET title=?, date=?, time=?, notes=? WHERE id=?");
-    $stmt->bind_param("ssssi", $title, $date, $time, $notes, $id);
+    $sql = "UPDATE appointments SET patient_name = :patient_name, doctor_name = :doctor_name, appointment_date = :appointment_date, location = :location, notes = :notes WHERE id = :id";
 
-    if ($stmt->execute()) {
+    $stmt = $db->prepare($sql);
+    $params = [
+        ':patient_name' => $patient_name,
+        ':doctor_name' => $doctor_name,
+        ':appointment_date' => $appointment_date,
+        ':location' => $location,
+        ':notes' => $notes ?: null,
+        ':id' => $id,
+    ];
+
+    if ($stmt->execute($params)) {
         $_SESSION['success'] = "Appointment updated successfully.";
         header("Location: view_appointments.php");
         exit;
     } else {
-        $_SESSION['error'] = "Error updating appointment: " . $conn->error;
+        $_SESSION['error'] = "Error updating appointment.";
         header("Location: update_appointment.php?id=$id");
         exit;
     }
@@ -55,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     header('Location: view_appointments.php');
     exit;
 }
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -70,20 +85,24 @@ $conn->close();
 
 <div class="layout">
   <nav class="sidebar">
-    <h2>Dashboard Menu</h2>
+    <h2>CareTrack</h2>
     <a href="index.php">🏠 Home</a>
     <a href="add_medication.php">💊 Add Medication</a>
     <a href="view_medications.php">📋 View Medications</a>
-    <a href="appointments.php">📅 Appointments</a>
+    <a href="add_appointment.php">📅 Add Appointment</a>
+    <a href="view_appointments.php" class="active">📖 View Appointments</a>
+    <p><a href="logout.php" class="back-link">Logout</a></p>
   </nav>
 
   <main class="content">
-  <?php include 'header.php'; ?>
     <h1>Update Appointment</h1>
 
-    <?php if (isset($_SESSION['error'])): ?>
-      <div class="error-message"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
-    <?php endif; ?>
+    <?php
+    if (isset($_SESSION['error'])) {
+        echo '<div class="error-message">' . $_SESSION['error'] . '</div>';
+        unset($_SESSION['error']);
+    }
+    ?>
 
     <form action="update_appointment.php" method="post" class="medication-form">
       <input type="hidden" name="id" value="<?= htmlspecialchars($appointment['id']) ?>" />
@@ -105,9 +124,9 @@ $conn->close();
 
       <button type="submit">Update Appointment</button>
     </form>
-    <?php include 'footer.php'; ?>
   </main>
 </div>
 
+<?php include 'footer.php'; ?>
 </body>
 </html>
