@@ -2,7 +2,9 @@
 session_start();
 include 'header.php';
 ?>
+
 <div class="layout">
+<?php include 'sidebar.php'; ?>
 <main class="content">
 <h1>Add New Medication</h1>
 

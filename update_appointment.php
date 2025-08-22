@@ -84,15 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 <?php include 'header.php'; ?>
 
 <div class="layout">
-  <nav class="sidebar">
-    <h2>CareTrack</h2>
-    <a href="index.php">🏠 Home</a>
-    <a href="add_medication.php">💊 Add Medication</a>
-    <a href="view_medications.php">📋 View Medications</a>
-    <a href="add_appointment.php">📅 Add Appointment</a>
-    <a href="view_appointments.php" class="active">📖 View Appointments</a>
-    <p><a href="logout.php" class="back-link">Logout</a></p>
-  </nav>
+  
+<?php include 'sidebar.php'; ?>
 
   <main class="content">
     <h1>Update Appointment</h1>

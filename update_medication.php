@@ -92,16 +92,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 <body>
 <?php include 'header.php'; ?>
 <div class="layout">
-  <nav class="sidebar">
-    <h2>CareTrack</h2>
-    <a href="index.php">🏠 Home</a>
-    <a href="add_medication.php">💊 Add Medication</a>
-    <a href="view_medications.php">📋 View Medications</a>
-    <a href="add_appointment.php">📅 Add Appointment</a>
-    <a href="view_appointments.php">📖 View Appointments</a>
-    <p><a href="logout.php" class="back-link">Logout</a></p>
-  </nav>
 
+<div class="layout">
+  
+<?php include 'sidebar.php'; ?>
+  
   <main class="content">
     <h2>Update Medication</h2>
 
@@ -112,29 +107,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
     ?>
 
-    <form action="update_medication.php" method="post" class="medication-form">
-      <input type="hidden" name="id" value="<?= htmlspecialchars($med['id']) ?>" />
+<form action="update_medication.php" method="post" class="medication-form">
+  <input type="hidden" name="id" value="<?= htmlspecialchars($med['id']) ?>" />
 
-      <label for="name">Medication Name</label>
-      <input type="text" id="name" name="name" value="<?= htmlspecialchars($med['name']) ?>" required />
+  <label for="name">Medication Name</label>
+  <input type="text" id="name" name="name" value="<?= htmlspecialchars($med['name']) ?>" required />
 
-      <label for="dosage">Dosage</label>
-      <input type="text" id="dosage" name="dosage" value="<?= htmlspecialchars($med['dosage']) ?>" required />
+  <label for="dosage">Dosage</label>
+  <input type="text" id="dosage" name="dosage" value="<?= htmlspecialchars($med['dosage']) ?>" required />
 
-      <label for="frequency">Frequency</label>
-      <input type="text" id="frequency" name="frequency" value="<?= htmlspecialchars($med['frequency']) ?>" required />
+  <label for="frequency">Frequency</label>
+  <input type="text" id="frequency" name="frequency" value="<?= htmlspecialchars($med['frequency']) ?>" required />
 
-      <label for="start_date">Start Date</label>
-      <input type="date" id="start_date" name="start_date" value="<?= htmlspecialchars($med['start_date']) ?>" required />
+  <label for="start_date">Start Date</label>
+  <input type="date" id="start_date" name="start_date" value="<?= htmlspecialchars($med['start_date']) ?>" required />
 
-      <label for="end_date">End Date (optional)</label>
-      <input type="date" id="end_date" name="end_date" value="<?= htmlspecialchars($med['end_date']) ?>" />
+  <label for="end_date">End Date (optional)</label>
+  <input type="date" id="end_date" name="end_date" value="<?= htmlspecialchars($med['end_date']) ?>" />
 
-      <label for="notes">Notes (optional)</label>
-      <textarea id="notes" name="notes"><?= htmlspecialchars($med['notes']) ?></textarea>
+  <label for="notes">Notes (optional)</label>
+  <textarea id="notes" name="notes"><?= htmlspecialchars($med['notes']) ?></textarea>
 
-      <button type="submit">Update Medication</button>
-    </form>
+  <button type="submit">Update Medication</button>
+  <button type="button" onclick="window.location.href='view_medications.php'">Cancel</button>
+</form>
+
   </main>
 </div>
 <?php include 'footer.php'; ?>

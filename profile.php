@@ -44,12 +44,6 @@ unset($_SESSION['upload_success'], $_SESSION['upload_error']);
   <h1>CareTrack</h1>
 </header>
 
-<nav>
-  <div class="nav-links">
-    <a href="index.php">Home</a>
-    <a href="profile.php">Profile</a>
-    <a href="logout.php">Logout</a>
-  </div>
 
   <div class="nav-profile">
     <img src="<?= $profile_image ?>" alt="Profile Image" class="profile-image" />
@@ -57,8 +51,6 @@ unset($_SESSION['upload_success'], $_SESSION['upload_error']);
 </nav>
 
 <h1>Your Profile</h1>
-
-<img id="profile-image" src="<?= $profile_image ?>" alt="Profile Image" class="profile-image" />
 
 <?php if ($successMessage): ?>
     <div id="success-msg" class="message success">

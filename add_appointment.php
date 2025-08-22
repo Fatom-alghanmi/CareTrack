@@ -10,16 +10,7 @@
 <?php include 'header.php'; ?>
 
   <div class="layout">
-    <nav class="sidebar">
-      <h2>CareTrack</h2>
-      <a href="index.php">🏠 Home</a>
-    <a href="add_medication.php">💊 Add Medication</a>
-      <a href="view_medications.php">📋 View Medications</a>
-      <a href="add_appointment.php" class="active">📅 Add Appointment</a>
-      <a href="view_appointments.php">📖 View Appointments</a>
-      <p><a href="logout.php" class="back-link">Logout</a></p>
-    </nav>
-
+<?php include 'sidebar.php'; ?>
     <main class="content">
       <h2>Add New Appointment</h2>
 
@@ -35,8 +26,12 @@
         <label>Doctor Name</label>
         <input type="text" name="doctor_name" required>
 
-        <label>Appointment Date</label>
-        <input type="datetime-local" name="appointment_date" required>
+        <label for="appointment_date">Date:</label>
+        <input type="date" name="appointment_date" required>
+              
+        <label for="appointment_time">Time:</label>
+        <input type="time" name="appointment_time" required>
+ 
 
         <label>Location</label>
         <input type="text" name="location">

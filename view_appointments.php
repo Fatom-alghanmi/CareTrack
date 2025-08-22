@@ -26,16 +26,9 @@ $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include 'header.php'; ?>
 
 <div class="layout">
-  <nav class="sidebar">
-    <h2>CareTrack</h2>
-    <a href="index.php">🏠 Home</a>
-    <a href="add_medication.php">💊 Add Medication</a>
-    <a href="view_medications.php">📋 View Medications</a>
-    <a href="add_appointment.php">📅 Add Appointment</a>
-    <a href="view_appointments.php" class="active">📖 View Appointments</a>
-    <p><a href="logout.php" class="back-link">Logout</a></p>
-  </nav>
-
+ 
+<?php include 'sidebar.php'; ?>
+  
   <main class="content">
     <h2>All Appointments</h2>
 
@@ -85,6 +78,20 @@ $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <?php include 'footer.php'; ?>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const successMsg = document.querySelector('.success-message');
+    if (successMsg) {
+      setTimeout(() => {
+        successMsg.style.transition = 'opacity 0.5s ease';
+        successMsg.style.opacity = '0';
+        setTimeout(() => successMsg.remove(), 500);
+      }, 3000);
+    }
+  });
+</script>
+
 
 </body>
 </html>

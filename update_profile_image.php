@@ -44,10 +44,10 @@ $stmt->bindValue(':profile_image', $filename);
 $stmt->bindValue(':userName', $userName);
 
 if ($stmt->execute()) {
-    $_SESSION['upload_success'] = "Profile image updated successfully!";
+   
 } else {
     $_SESSION['upload_error'] = "Database update failed.";
 }
-
-header('Location: profile.php');
+$_SESSION['upload_success'] = "Profile image updated successfully!";
+header('Location: index.php');
 exit();
