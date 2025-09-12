@@ -7,7 +7,8 @@ session_start();
     <title>Login</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
-<body>
+<body data-theme="light">
+
     <main>
         <h2>Login</h2>
         <?php if (isset($_SESSION['login_error'])): ?>

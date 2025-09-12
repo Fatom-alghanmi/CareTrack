@@ -14,7 +14,8 @@ unset($_SESSION['add_error']);
     <meta charset="UTF-8">
     <title>CareTrack - Error</title>
 </head>
-<body>
+<body data-theme="light">
+
     <h2 style="color: red;">Registration Error</h2>
     <p><?= htmlspecialchars($error) ?></p>
     <p><a href="register_user_form.php">← Try registering again</a></p>

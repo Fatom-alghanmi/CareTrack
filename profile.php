@@ -38,7 +38,8 @@ unset($_SESSION['upload_success'], $_SESSION['upload_error']);
         .message.error { color: red; }
     </style>
 </head>
-<body>
+<body data-theme="light">
+
 
 <header class="main-header">
   <h1>CareTrack</h1>

@@ -10,7 +10,8 @@ unset($_SESSION['message']);
     <title>Confirmation</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
-<body>
+<body data-theme="light">
+
     <div class="layout">
         <aside class="sidebar">
             <h2>CareTrack</h2>

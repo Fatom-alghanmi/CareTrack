@@ -7,7 +7,8 @@
     
   </style>
 </head>
-<body>
+<body data-theme="light">
+
   <div class="error-box">
     <h1>🚫 Database Connection Error</h1>
     <p>We're sorry, but we couldn't connect to the database.</p>

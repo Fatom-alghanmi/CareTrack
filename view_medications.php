@@ -22,7 +22,8 @@ $medications = $stmt->fetchAll(PDO::FETCH_ASSOC);
     .actions button { margin: 2px; }
   </style>
 </head>
-<body>
+<body data-theme="light">
+
 
 <?php include 'header.php'; ?>
 

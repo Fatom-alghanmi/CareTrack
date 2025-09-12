@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Add Medication</title>
-  <link rel="stylesheet" href="css/main.css"> <!-- Optional CSS -->
+  <link rel="stylesheet" href="css/main.css"> 
 </head>
-<body>
+<body data-theme="light">
+
 <?php include 'header.php'; ?>
 
 <div class="layout">

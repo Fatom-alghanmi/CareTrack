@@ -27,10 +27,12 @@ if (!empty($userName)) {
 
 <nav class="sidebar">
   <h2>CareTrack</h2>
+
+  <!-- Mode Toggle -->
   <label class="mode-toggle">
-  <input type="checkbox" id="modeSwitch">
-  <span>🌙 / ☀️</span>
-</label>
+    <input type="checkbox" id="modeSwitch">
+    <span id="modeIcon">☀️</span>
+  </label>
 
   <div class="profile-image-wrapper">
     <img src="images/<?= htmlspecialchars($profileImage) ?>" alt="Profile Image" class="profile-image" />
@@ -46,3 +48,36 @@ if (!empty($userName)) {
   <a href="profile.php" class="<?= $currentPage == 'profile.php' ? 'active' : '' ?>">👤 Profile</a>
   <a href="logout.php" class="back-link">🚪 Logout</a>
 </nav>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const modeSwitch = document.getElementById("modeSwitch");
+  const modeIcon = document.getElementById("modeIcon");
+  const body = document.body;
+
+  // Load saved mode
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    body.setAttribute("data-theme", "dark");
+    modeSwitch.checked = true;
+    modeIcon.textContent = "🌙";
+  } else {
+    body.setAttribute("data-theme", "light");
+    modeSwitch.checked = false;
+    modeIcon.textContent = "☀️";
+  }
+
+  // Toggle theme
+  modeSwitch.addEventListener("change", function () {
+    if (modeSwitch.checked) {
+      body.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+      modeIcon.textContent = "🌙";
+    } else {
+      body.setAttribute("data-theme", "light");
+      localStorage.setItem("theme", "light");
+      modeIcon.textContent = "☀️";
+    }
+  });
+});
+</script>

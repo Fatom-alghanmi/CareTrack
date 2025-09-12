@@ -8,7 +8,8 @@ session_start();
   <meta charset="UTF-8">
   <title>Confirmation</title>
 </head>
-<body>
+<body data-theme="light">
+
 
   <h2>Medication Entry</h2>
 

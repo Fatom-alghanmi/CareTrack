@@ -7,7 +7,8 @@
         <title>CareTrack - Register</title>
         <link rel="stylesheet" type="text/css" href="css/main.css" />
     </head>
-    <body>
+    <body data-theme="light">
+
         <?php include("header.php"); ?>
 
         <main>
